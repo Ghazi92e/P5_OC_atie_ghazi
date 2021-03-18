@@ -1,3 +1,4 @@
+from createuser import Createuser
 from dbinsert import DBinsert
 from main import DB
 
@@ -16,11 +17,11 @@ class Menu:
             print("Sélectionnez la catégorie")
             c.showdata("Category")
             cat = input()
-            c.showrequest(c.selectproductscategory(cat))
+            c.showrequest(c.selectcategoryorproduct("category_id", cat))
             selectproduct = input("Veuillez sélectionnez un aliment \n")
             print("Voici le produit que vous avez sélectionnez:")
-            c.showrequest(c.selectproduct(selectproduct))
-            print("Produit de substitut:")
+            c.showrequest(c.selectcategoryorproduct("id", selectproduct))
+            print("PRODUITS DE SUBSTITUS:")
             c.showrequest(c.subproduct(cat))
             insertsub = input("Selectionnez un substitut")
             i = DBinsert()
@@ -28,14 +29,15 @@ class Menu:
 
         elif text == "2":
             c = DB()
+            u = Createuser()
             user = input("Entrer votre nom d'utilisateur")
+            u.checkuser(user)
             c.showdata("Category")
             cat_id = input("Veuillez sélectionnez une categorie")
-            print("Produits de substitut")
-            c.showrequest(c.selectsubproduct(cat_id, c.selectiduser(user)))
-            print("Aliment(s) substitué(s)")
-            c.showrequest(c.selectproducttosub(cat_id, c.selectiduser(user)))
-
+            print("Produits de substitut:")
+            c.showrequest(c.selectsubproductorproduct("subproduct_id", cat_id, c.selectiduser(user)))
+            print("Aliment(s) substitué(s):")
+            c.showrequest(c.selectsubproductorproduct("product_id", cat_id, c.selectiduser(user)))
 
 r = Menu()
 r.home_menu()
