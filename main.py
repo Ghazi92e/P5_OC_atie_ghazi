@@ -21,13 +21,9 @@ class DB:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.cursor.close()
 
-    def selectproductscategory(self, category_id):
+    def selectcategoryorproduct(self, field, category_id):
         sql_select_query = f"SELECT * from Product " \
-                           f"WHERE category_id = {category_id}"
-        return sql_select_query
-
-    def selectproduct(self, product_id):
-        sql_select_query = f"SELECT * from Product WHERE id = {product_id}"
+                           f"WHERE {field} = {category_id}"
         return sql_select_query
 
     def subproduct(self, category_id):
@@ -36,21 +32,12 @@ class DB:
                            f"ORDER BY nutriscore"
         return sql_select_query
 
-    def selectsubproduct(self, cat_id, user_id):
-        sql = f"""SELECT Subproduct.subproduct_id, Product.name,
+    def selectsubproductorproduct(self, product_field, cat_id, user_id):
+        sql = f"""SELECT Subproduct.{product_field}, Product.name,
                 Product.barcode, Product.nutriscore,
                 Product.link, Product.stores
                 FROM Product
-                INNER JOIN Subproduct ON Product.id = Subproduct.subproduct_id
-                WHERE category_id = {cat_id} AND user_id = {user_id}"""
-        return sql
-
-    def selectproducttosub(self, cat_id, user_id):
-        sql = f"""SELECT Subproduct.product_id, Product.name,
-                Product.barcode, Product.nutriscore,
-                Product.link, Product.stores
-                FROM Product
-                INNER JOIN Subproduct ON Product.id = Subproduct.product_id
+                INNER JOIN Subproduct ON Product.id = Subproduct.{product_field}
                 WHERE category_id = {cat_id} AND user_id = {user_id}"""
         return sql
 
@@ -120,3 +107,5 @@ if __name__ == '__main__':
     # db.insertsubproduct(1, 151)
     # db.insertuser("Papa")
     # db.selectiduser("Ghazi")
+    # db.showrequest(db.selectcategoryorproduct("category_id", 1))
+    # db.showrequest(db.selectsubproductorproduct("subproduct_id", 1, 1))
