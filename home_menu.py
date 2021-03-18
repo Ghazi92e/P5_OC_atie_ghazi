@@ -13,7 +13,9 @@ class Menu:
 
         if text == "1":
             c = DB()
+            u = Createuser()
             user = input("Entrer votre nom d'utilisateur")
+            u.checkuser(user)
             print("Sélectionnez la catégorie")
             c.showdata("Category")
             cat = input()
