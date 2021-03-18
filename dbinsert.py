@@ -135,9 +135,9 @@ class DBinsert:
 
 
 insert = DBinsert()
-# insert.createtables()
-# insert.datacategory()
-insert.getapidata()
-insert.filterdata()
-insert.insertproducts()
+#insert.createtables()
+#insert.datacategory()
+#insert.getapidata()
+#insert.filterdata()
+#insert.insertproducts()
 # insert.updatedata()
