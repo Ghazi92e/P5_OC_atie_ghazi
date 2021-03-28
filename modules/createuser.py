@@ -1,20 +1,9 @@
 import mysql.connector
 
+from modules.db import DB
 
-class Createuser:
-    def __enter__(self):
-        self.cnx = mysql.connector.connect(user='ghazi',
-                                           database='elevage',
-                                           password='Liban',
-                                           host='localhost')
-        self.cursor = self.cnx.cursor()
-        print("__enter__")
-        return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print("__exit__")
-        self.cursor.close()
-
+class Createuser(DB):
     def insertuser(self, user_name):
         try:
             add_user = ("""INSERT INTO User

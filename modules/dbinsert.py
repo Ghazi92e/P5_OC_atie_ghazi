@@ -1,25 +1,13 @@
 import mysql.connector
 import requests
 
+from modules.db import DB
 from modules.constants import Categories
 
 
-class DBinsert:
+class DBinsert(DB):
     def __init__(self):
         self.products = {}
-
-    def __enter__(self):
-        self.cnx = mysql.connector.connect(user='ghazi',
-                                           database='elevage',
-                                           password='Liban',
-                                           host='localhost')
-        self.cursor = self.cnx.cursor()
-        print("__enter__")
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print("__exit__")
-        self.cursor.close()
 
     def createtables(self):
         with open("modules/database.sql") as sqlfile:
@@ -121,13 +109,14 @@ class DBinsert:
                     pass
 
     def insertorupdateproducts(self):
-        sql_select_query = f"SELECT barcode from Product WHERE barcode = Product.barcode"
+        sql_select_query = f"SELECT barcode from " \
+                           f"Product WHERE barcode = Product.barcode"
         self.cursor.execute(sql_select_query)
         res = self.cursor.fetchall()
         if res:
-            insert.updatedata()
+            self.updatedata()
         else:
-            insert.insertproducts()
+            self.insertproducts()
 
     def insertsubproduct(self, subproduct_id, product_id, user_id):
         add_product = ("""INSERT INTO Subproduct
@@ -151,3 +140,4 @@ if __name__ == '__main__':
     with DBinsert() as insert:
         insert.getapidata()
         insert.filterdata()
+        insert.insertorupdateproducts()
