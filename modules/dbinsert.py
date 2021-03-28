@@ -1,27 +1,28 @@
 import mysql.connector
 import requests
 
-from constants import Categories
+from modules.constants import Categories
 
 
 class DBinsert:
     def __init__(self):
+        self.products = {}
 
+    def __enter__(self):
         self.cnx = mysql.connector.connect(user='ghazi',
                                            database='elevage',
                                            password='Liban',
                                            host='localhost')
         self.cursor = self.cnx.cursor()
-        self.products = {}
-
-    def __enter__(self):
-        return self.cursor
+        print("__enter__")
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        print("__exit__")
         self.cursor.close()
 
     def createtables(self):
-        with open("database.sql") as sqlfile:
+        with open("modules/database.sql") as sqlfile:
             content = sqlfile.read()
             sqlcommands = content.split(';')
             cursor = self.cnx.cursor()
@@ -71,18 +72,19 @@ class DBinsert:
                         data.pop("stores")
                     if data['generic_name_fr'] == '':
                         data.pop("generic_name_fr")
+
+                    print(self.products[key])
                 except KeyError:
                     pass
 
     def insertproducts(self):
         add_product = ("""INSERT INTO Product
-                       (id, name, barcode, link, nutriscore,
+                       (name, barcode, link, nutriscore,
                        stores, category_id)
-                       VALUES (%(id)s, %(name)s, %(barcode)s,
+                       VALUES (%(name)s, %(barcode)s,
                        %(link)s, %(nutriscore)s, %(stores)s,
                        %(category_id)s)""")
 
-        id = self.cursor.lastrowid
         selectcatid = """SELECT * from Category"""
         self.cursor.execute(selectcatid)
         datatables = self.cursor.fetchall()
@@ -90,7 +92,6 @@ class DBinsert:
             for prod in self.products[d[1]]:
                 try:
                     data_product = {
-                        'id': id,
                         'name': prod['generic_name_fr'],
                         'stores': prod['stores'],
                         'barcode': prod['code'],
@@ -119,6 +120,15 @@ class DBinsert:
                 except KeyError:
                     pass
 
+    def insertorupdateproducts(self):
+        sql_select_query = f"SELECT barcode from Product WHERE barcode = Product.barcode"
+        self.cursor.execute(sql_select_query)
+        res = self.cursor.fetchall()
+        if res:
+            insert.updatedata()
+        else:
+            insert.insertproducts()
+
     def insertsubproduct(self, subproduct_id, product_id, user_id):
         add_product = ("""INSERT INTO Subproduct
                                (subproduct_id, product_id, user_id)
@@ -134,10 +144,10 @@ class DBinsert:
         self.cnx.commit()
 
 
-insert = DBinsert()
-#insert.createtables()
-#insert.datacategory()
-#insert.getapidata()
-#insert.filterdata()
-#insert.insertproducts()
-# insert.updatedata()
+if __name__ == '__main__':
+    # insert.createtables()
+    # insert.datacategory()
+    # insert.insertproducts()
+    with DBinsert() as insert:
+        insert.getapidata()
+        insert.filterdata()
