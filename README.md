@@ -38,3 +38,7 @@ python modules/dbsetup.py
 ```
 python main.py
 ```
+PS: Pour mettre à jour les produits exécuter le module dbinsert.py
+```
+python modules/dbinsert.py
+```
