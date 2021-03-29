@@ -1,4 +1,3 @@
-from modules.constants import Categories
 from modules.dbinsert import DBinsert
 
 
@@ -8,7 +7,7 @@ class DBsetup:
         setup.datacategory()
         setup.getapidata()
         setup.filterdata()
-        setup.insertorupdateproducts()
+        setup.insertproducts()
 
 
 DBsetup()

@@ -7,8 +7,8 @@ from modules.dbinsert import DBinsert
 from modules.home_menu import Menu
 
 with DBinsert() as u:
-    createaccount = input("Pour crée un compte entrer 1"
-                          "pour acceder à l'application entrer 2")
+    createaccount = input("Pour créer un compte entrer 1"
+                          " pour acceder à l'application entrer 2")
 
     if createaccount == '1':
         with Createuser() as create:

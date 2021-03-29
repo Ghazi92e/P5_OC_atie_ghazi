@@ -5,19 +5,20 @@
 # classes, files, tool windows, actions, and settings.
 import mysql.connector
 
+from modules.constants import DB_USER, DB_NAME,\
+    DB_PASSWORD, DB_HOST
+
 
 class DB:
     def __enter__(self):
-        self.cnx = mysql.connector.connect(user='ghazi',
-                                           database='elevage',
-                                           password='Liban',
-                                           host='localhost')
+        self.cnx = mysql.connector.connect(user=DB_USER,
+                                           database=DB_NAME,
+                                           password=DB_PASSWORD,
+                                           host=DB_HOST)
         self.cursor = self.cnx.cursor()
-        print("__enter__")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        print("__exit__")
         self.cursor.close()
 
     def selectrequest(self, select_table_name, where_field, where_data_field,
@@ -54,10 +55,3 @@ class DB:
         res = self.cursor.fetchone()
         self.cnx.commit()
         return res[0]
-
-
-if __name__ == '__main__':
-    db = DB()
-    # db.showrequest(db.selectcategoryorproduct("category_id", 1))
-    # db.showrequest(db.selectsubproductorproduct("subproduct_id", 1, 1))
-    # db.showproductrequest(db.selectcategoryorproduct("category_id", 1))

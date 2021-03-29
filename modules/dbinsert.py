@@ -19,20 +19,21 @@ class DBinsert(DB):
             print("Table created")
 
     def datacategory(self):
-        add_category = ("INSERT INTO Category "
-                        "(id, name) "
-                        "VALUES (%(id)s, %(name)s)")
-        id = self.cursor.lastrowid
-        for name in Categories:
-            data_category = {
-                                'id': id,
-                                'name': name,
-                            },
-            self.cursor.executemany(add_category,
-                                    data_category)
-            self.cnx.commit()
-            print(self.cursor.rowcount, "Record inserted successfully "
-                                        "into Laptop table")
+        try:
+            add_category = ("INSERT INTO Category "
+                            "(name) "
+                            "VALUES (%(name)s)")
+            for name in Categories:
+                data_category = {
+                                    'name': name,
+                                },
+                self.cursor.executemany(add_category,
+                                        data_category)
+                self.cnx.commit()
+                print(self.cursor.rowcount, "Record inserted successfully "
+                                            "into Laptop table")
+        except mysql.connector.errors.IntegrityError:
+            print("Error")
 
     def getapidata(self):
         for category in Categories:
@@ -60,8 +61,6 @@ class DBinsert(DB):
                         data.pop("stores")
                     if data['generic_name_fr'] == '':
                         data.pop("generic_name_fr")
-
-                    print(self.products[key])
                 except KeyError:
                     pass
 
@@ -117,6 +116,7 @@ class DBinsert(DB):
             self.updatedata()
         else:
             self.insertproducts()
+        print("Produits mis à jour")
 
     def insertsubproduct(self, subproduct_id, product_id, user_id):
         add_product = ("""INSERT INTO Subproduct
@@ -134,9 +134,6 @@ class DBinsert(DB):
 
 
 if __name__ == '__main__':
-    # insert.createtables()
-    # insert.datacategory()
-    # insert.insertproducts()
     with DBinsert() as insert:
         insert.getapidata()
         insert.filterdata()

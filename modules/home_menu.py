@@ -31,7 +31,7 @@ class Menu(DB):
                                    c.selectiduser(self.user))
                 print("Vos informations ont bien été sauvegardées")
                 text = input("Entrer 2 pour retrouver vos aliments substitués"
-                             "ou Q pour quitter")
+                             " ou Q pour quitter")
                 if text == '2':
                     self.home_menu2()
 

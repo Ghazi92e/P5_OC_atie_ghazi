@@ -28,10 +28,3 @@ class Createuser(DB):
         else:
             print("Le nom d'utilisateur est invalide")
             exit()
-
-
-if __name__ == '__main__':
-    with Createuser() as user:
-        username = input("Veuillez entrer un nom d'utilisateur:")
-        user.insertuser(username)
-        user.checkuser("Ghazi")
