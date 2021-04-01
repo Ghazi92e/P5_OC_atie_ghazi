@@ -5,6 +5,7 @@ from modules.db import DB
 
 class Createuser(DB):
     def insertuser(self, user_name):
+        """Used to insert user in DB"""
         try:
             add_user = ("""INSERT INTO User
                                    (name)
@@ -20,6 +21,7 @@ class Createuser(DB):
             exit()
 
     def checkuser(self, user_name):
+        """Used to check if username already exists in DB"""
         sql_select_query = f"SELECT name from User WHERE name = '{user_name}'"
         self.cursor.execute(sql_select_query)
         res = self.cursor.fetchall()

@@ -6,12 +6,14 @@ from modules.dbshow import DBshow
 
 class Menu(DB):
     def __init__(self):
+        """Used to check if user are valide"""
         with Createuser() as u:
             self.user = input("Entrer un nom d'utilisateur")
             u.checkuser(self.user)
 
     def home_menu1(self):
         with DBinsert() as c:
+            """Used to manage the first part of the menu"""
             with DBshow() as s:
                 print("Sélectionner la catégorie")
                 s.showselectrequest(c.selectrequest("Category", "None",
@@ -37,6 +39,7 @@ class Menu(DB):
 
     def home_menu2(self):
         with DBinsert() as c:
+            """Used to manage the second part of the menu"""
             with DBshow() as s:
                 s.showselectrequest(c.selectrequest("Category", "None",
                                                     "None", "select"))

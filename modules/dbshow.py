@@ -3,6 +3,7 @@ from modules.db import DB
 
 class DBshow(DB):
     def showselectrequest(self, requestsql):
+        """Used to show category data table"""
         self.cursor.execute(requestsql)
         res = self.cursor.fetchall()
         for data in res:
@@ -10,6 +11,7 @@ class DBshow(DB):
         self.cnx.commit()
 
     def showproductrequest(self, requestsql):
+        """Used to show products data table"""
         self.cursor.execute(requestsql)
         res = self.cursor.fetchall()
         for data in res:

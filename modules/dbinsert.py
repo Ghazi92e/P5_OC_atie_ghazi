@@ -7,9 +7,11 @@ from modules.constants import Categories
 
 class DBinsert(DB):
     def __init__(self):
+        """Used to recover the API products"""
         self.products = {}
 
     def createtables(self):
+        """Used to create DB tables"""
         with open("modules/database.sql") as sqlfile:
             content = sqlfile.read()
             sqlcommands = content.split(';')
@@ -19,6 +21,7 @@ class DBinsert(DB):
             print("Table created")
 
     def datacategory(self):
+        """Used to insert products category"""
         try:
             add_category = ("INSERT INTO Category "
                             "(name) "
@@ -36,6 +39,7 @@ class DBinsert(DB):
             print("Error")
 
     def getapidata(self):
+        """Used to get products data from the OpenFoodFact API"""
         for category in Categories:
             r = requests.get(
                 'https://fr.openfoodfacts.org/cgi/search.pl',
@@ -54,6 +58,7 @@ class DBinsert(DB):
             self.products[category] = res["products"]
 
     def filterdata(self):
+        """Used to filter products from the Openfoodfact API"""
         for key in Categories:
             for data in self.products[key]:
                 try:
@@ -65,6 +70,7 @@ class DBinsert(DB):
                     pass
 
     def insertproducts(self):
+        """Used to insert API products in DB"""
         add_product = ("""INSERT INTO Product
                        (name, barcode, link, nutriscore,
                        stores, category_id)
@@ -92,6 +98,7 @@ class DBinsert(DB):
                     pass
 
     def updatedata(self):
+        """Used to update products from the DB"""
         for key in Categories:
             for prod in self.products[key]:
                 try:
@@ -108,6 +115,7 @@ class DBinsert(DB):
                     pass
 
     def insertorupdateproducts(self):
+        """Used to update the API products"""
         sql_select_query = f"SELECT barcode from " \
                            f"Product WHERE barcode = Product.barcode"
         self.cursor.execute(sql_select_query)
@@ -119,6 +127,7 @@ class DBinsert(DB):
         print("Produits mis à jour")
 
     def insertsubproduct(self, subproduct_id, product_id, user_id):
+        """Used to insert a substitute product in DB"""
         add_product = ("""INSERT INTO Subproduct
                                (subproduct_id, product_id, user_id)
                              VALUES (%(subproduct_id)s,

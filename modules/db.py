@@ -23,6 +23,7 @@ class DB:
 
     def selectrequest(self, select_table_name, where_field, where_data_field,
                       name_field):
+        """Select product from DB"""
         sql_select_query = f"SELECT * from {select_table_name} "
         sql_where_query = f"WHERE {where_field} = {where_data_field} "
         sql_order_query = f"ORDER BY nutriscore"
@@ -34,6 +35,7 @@ class DB:
             return sql_select_query + sql_where_query + sql_order_query
 
     def selectsubproductorproduct(self, product_field, cat_id, user_id):
+        """Select subproduct or product"""
         sql = f"""SELECT Subproduct.{product_field}, Product.name,
                 Product.barcode, Product.nutriscore,
                 Product.link, Product.stores
@@ -44,12 +46,14 @@ class DB:
         return sql
 
     def droptable(self, table_name):
+        """Delete a table"""
         cursor = self.cnx.cursor()
         query = f"DROP TABLE {table_name}"
         cursor.execute(query)
         print(f"Table {table_name} deleted")
 
     def selectiduser(self, name):
+        """Select the user id"""
         sql_select_query = f"SELECT id FROM User WHERE name = '{name}'"
         self.cursor.execute(sql_select_query)
         res = self.cursor.fetchone()
