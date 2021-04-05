@@ -6,6 +6,7 @@ from modules.bdd.db import DB
 
 class DBsetup(DB):
     def __init__(self):
+        """Used to retrieve API products"""
         self.products = {}
 
     def createtables(self, db_script_path):

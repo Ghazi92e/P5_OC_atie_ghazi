@@ -6,11 +6,12 @@
 import mysql.connector
 
 from modules.constants import DB_USER, DB_NAME, \
-    DB_PASSWORD, DB_HOST, Categories
+    DB_PASSWORD, DB_HOST
 
 
 class DB:
     def __enter__(self):
+        """Open the connexion to the DB"""
         self.cnx = mysql.connector.connect(user=DB_USER,
                                            database=DB_NAME,
                                            password=DB_PASSWORD,
@@ -20,6 +21,7 @@ class DB:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """Close the connexion to the DB"""
         self.cursor.close()
         print("__exit__")
 
