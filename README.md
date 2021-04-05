@@ -29,16 +29,7 @@ L'utilisateur sélectionne 1. Le programme pose les questions suivantes à l'uti
 DB_USER, DB_NAME, DB_PASSWORD, DB_HOST
 ```
 
-4. Executer le module dbsetup.py pour la création des tables et l'insertion des produits
-```
-python modules/dbsetup.py
-```
-
-5. Executer l'application avec le fichier main.py
+4. Exécuter l'application avec le fichier main.py
 ```
 python main.py
-```
-PS: Pour mettre à jour les produits exécuter le module dbinsert.py
-```
-python modules/dbinsert.py
 ```
