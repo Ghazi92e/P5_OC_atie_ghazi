@@ -1,4 +1,4 @@
-from modules.db import DB
+from modules.bdd.db import DB
 
 
 class DBshow(DB):

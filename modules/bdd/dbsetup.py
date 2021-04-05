@@ -1,18 +1,16 @@
-import mysql.connector
 import requests
 
-from modules.db import DB
 from modules.constants import Categories
+from modules.bdd.db import DB
 
 
-class DBinsert(DB):
+class DBsetup(DB):
     def __init__(self):
-        """Used to recover the API products"""
         self.products = {}
 
-    def createtables(self):
+    def createtables(self, db_script_path):
         """Used to create DB tables"""
-        with open("modules/database.sql") as sqlfile:
+        with open(db_script_path) as sqlfile:
             content = sqlfile.read()
             sqlcommands = content.split(';')
             cursor = self.cnx.cursor()
@@ -20,23 +18,20 @@ class DBinsert(DB):
                 cursor.execute(tables)
             print("Table created")
 
-    def datacategory(self):
+    def datacategory(self, table_name, data_list):
         """Used to insert products category"""
-        try:
-            add_category = ("INSERT INTO Category "
-                            "(name) "
-                            "VALUES (%(name)s)")
-            for name in Categories:
-                data_category = {
-                                    'name': name,
-                                },
-                self.cursor.executemany(add_category,
-                                        data_category)
-                self.cnx.commit()
-                print(self.cursor.rowcount, "Record inserted successfully "
-                                            "into Laptop table")
-        except mysql.connector.errors.IntegrityError:
-            print("Error")
+        add_category = (f"INSERT INTO {table_name} "
+                        "(name) "
+                        "VALUES (%(name)s)")
+        for name in data_list:
+            data_category = {
+                                'name': name,
+                            },
+            self.cursor.executemany(add_category,
+                                    data_category)
+            self.cnx.commit()
+            print(self.cursor.rowcount, "Record inserted successfully "
+                                        "into Laptop table")
 
     def getapidata(self):
         """Used to get products data from the OpenFoodFact API"""
@@ -97,6 +92,18 @@ class DBinsert(DB):
                 except KeyError:
                     pass
 
+    def insertorupdateproducts(self):
+        """Used to update the API products"""
+        sql_select_query = f"SELECT barcode from " \
+                           f"Product WHERE barcode = Product.barcode"
+        self.cursor.execute(sql_select_query)
+        res = self.cursor.fetchall()
+        if res:
+            self.updatedata()
+        else:
+            self.insertproducts()
+        print("Produits mis à jour")
+
     def updatedata(self):
         """Used to update products from the DB"""
         for key in Categories:
@@ -113,37 +120,3 @@ class DBinsert(DB):
                     self.cnx.commit()
                 except KeyError:
                     pass
-
-    def insertorupdateproducts(self):
-        """Used to update the API products"""
-        sql_select_query = f"SELECT barcode from " \
-                           f"Product WHERE barcode = Product.barcode"
-        self.cursor.execute(sql_select_query)
-        res = self.cursor.fetchall()
-        if res:
-            self.updatedata()
-        else:
-            self.insertproducts()
-        print("Produits mis à jour")
-
-    def insertsubproduct(self, subproduct_id, product_id, user_id):
-        """Used to insert a substitute product in DB"""
-        add_product = ("""INSERT INTO Subproduct
-                               (subproduct_id, product_id, user_id)
-                             VALUES (%(subproduct_id)s,
-                             %(product_id)s, %(user_id)s) """)
-
-        data_product = {
-            'subproduct_id': subproduct_id,
-            'product_id': product_id,
-            'user_id': user_id,
-        }
-        self.cursor.execute(add_product, data_product)
-        self.cnx.commit()
-
-
-if __name__ == '__main__':
-    with DBinsert() as insert:
-        insert.getapidata()
-        insert.filterdata()
-        insert.insertorupdateproducts()
