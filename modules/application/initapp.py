@@ -7,7 +7,8 @@ from modules.application.home_menu import Menu
 class Initapp:
     createaccount = input("Pour créer un compte entrer 1 "
                           "Pour accéder à l'application entrer 2 "
-                          "Pour installer la BDD entrer 3")
+                          "Pour installer la BDD entrer 3 "
+                          "Pour mettre à jour les produits entrer 4")
     if createaccount == '1':
         with DB() as d:
             user = input("Veuillez entrer un nom d'utilisateur")
@@ -19,6 +20,11 @@ class Initapp:
             u.getapidata()
             u.filterdata()
             u.insertproducts()
+    elif createaccount == '4':
+        with DBsetup() as u:
+            u.getapidata()
+            u.filterdata()
+            u.insertorupdateproducts()
     elif createaccount == '2':
         with DB() as d:
             user_app = input("Entrer un nom d'utilisateur")
