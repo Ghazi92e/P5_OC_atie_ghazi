@@ -1,35 +1,62 @@
 # [P5_OC](https://openclassrooms.com/fr/paths/68/projects/157/assignment)
 ![Image of Openfoodfact](https://stockagehelloassoprod.blob.core.windows.net/images/logos/open-food-facts_sb200x200_bb0x0x200x200.png)
 
-### Utilisez les données publiques de l'OpenFoodFacts
+### Use public data from OpenFoodFacts
 
-La startup Pur Beurre travaille connait bien les habitudes alimentaires françaises. Leur restaurant, Ratatouille, remporte un succès croissant et attire toujours plus de visiteurs sur la butte de Montmartre.
+The startup Pur Beurre works well knows French eating habits. Their restaurant, Ratatouille, is enjoying growing success and attracting more and more visitors to the Butte de Montmartre.
 
-L'équipe a remarqué que leurs utilisateurs voulaient bien changer leur alimentation mais ne savaient pas bien par quoi commencer. Remplacer le Nutella par une pâte aux noisettes, oui, mais laquelle ? Et dans quel magasin l'acheter ? Leur idée est donc de créer un programme qui interagirait avec la base Open Food Facts pour en récupérer les aliments, les comparer et proposer à l'utilisateur un substitut plus sain à l'aliment qui lui fait envie.
+The team noticed that their users were keen on making a change in their diet but weren't sure where to start. Replace Nutella with a hazelnut paste, yes, but which one? And in which store to buy it? Their idea is therefore to create a program that would interact with the Open Food Facts database to retrieve the foods, compare them and offer the user a healthier substitute for the food they want.
 
-### Cahier des charges
-#### Description du parcours utilisateur
-L'utilisateur est sur le terminal. Ce dernier lui affiche les choix suivants :
+### Specifications
+#### Description of the user journey
+The user is on the terminal. The latter displays the following choices:
 
-1. Quel aliment souhaitez-vous remplacer ?
-2. Retrouver mes aliments substitués.
+1. What food do you want to replace?
+2. Find my substitute foods.
 
-L'utilisateur sélectionne 1. Le programme pose les questions suivantes à l'utilisateur et ce dernier sélectionne les réponses:
+The user selects 1. The program asks the following questions to the user and the user selects the answers:
 
-- Sélectionnez la catégorie.[Plusieurs propositions associées à un chiffre. L'utilisateur entre le chiffre correspondant et appuie sur entrée]
-- Sélectionnez l'aliment. [Plusieurs propositions associées à un chiffre. L'utilisateur entre le chiffre correspondant à l'aliment choisi et appuie sur entrée]
-- Le programme propose un substitut, sa description, un magasin ou l'acheter (le cas échéant) et un lien vers la page d'Open Food Facts concernant cet aliment.
-- L'utilisateur a alors la possibilité d'enregistrer le résultat dans la base de données.
+- Select the category [Several propositions associated with a number. The user enters the corresponding number and presses enter]
+- Select the food. [Several propositions associated with a number. The user enters the number corresponding to the chosen food and presses enter]
+- The program offers a substitute, its description, where to store or buy it (if applicable) and a link to the Open Food Facts page for that food.
+- The user then has the possibility of saving the result in the database.
 
 ### Installation
-1. Installer MYSQL
-2. Créer une base de données avec MYSQL
-3. Configurer le fichier constants.py
+1. Install MYSQL
+2. Create a database with MYSQL
+3. Create a .env file
 ```
-DB_USER, DB_NAME, DB_PASSWORD, DB_HOST
+touch .env
 ```
-
-4. Exécuter l'application avec le fichier main.py
+4. Add and configure the environment variables
+```
+DB_USER="", DB_NAME="", DB_PASSWORD="", DB_HOST=""
+```
+5. Run the application with the main.py file
 ```
 python main.py
 ```
+### Documentation project
+Class | Method | Description 
+------------ | ------------- | -------------
+ DB | selectrequest             | select a request SQL
+ DB | selectsubproductorproduct | select a subproduct and product
+ DB | selectiduser              | select a user
+ DB | insertsubproduct          | insert into DB a substitute product 
+ DB | insertuser                | create a user
+ DB | checkuser                 | check if a user already exist
+ DB | cursordb                  | create a cursor 
+ DB | fetchall                  | display data DB
+ DB | commit                    | create a commit
+ DBsetup | createtables         | create tables for DB
+ DBsetup | datacategory         | insert products category
+ DBsetup | getapidata           | get API data
+ DBsetup | filterdata           | filter API products without data
+ DBsetup | insertproducts       | insert products into DB
+ DBsetup | insertorupdateproducts | insert or update DB products
+ DBsetup | updatedata           | update DB products
+ DBshow  | showselectrequest    | display requests SQL
+ DBshow  | showproductrequest   | display DB products 
+ Menu    | home_menu1           | manage the first part of the menu
+ Menu    | home_menu2           | manage the second part of the menu
+ Initapp | mainapp              | manage the main application
