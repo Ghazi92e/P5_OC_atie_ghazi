@@ -28,7 +28,7 @@ The user selects 1. The program asks the following questions to the user and the
 ```
 touch .env
 ```
-4. Add and configure the environment variables
+4. Add and configure the environment variables in file .env
 ```
 DB_USER="", DB_NAME="", DB_PASSWORD="", DB_HOST=""
 ```
