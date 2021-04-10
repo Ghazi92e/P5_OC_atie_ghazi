@@ -1,22 +1,21 @@
 import requests
 
 from modules.constants import Categories
-from modules.bdd.db import DB
 
 
-class DBsetup(DB):
-    def __init__(self):
+class DBsetup:
+    def __init__(self, db):
         """Used to retrieve API products"""
         self.products = {}
+        self.db = db
 
     def createtables(self, db_script_path):
         """Used to create DB tables"""
         with open(db_script_path) as sqlfile:
             content = sqlfile.read()
             sqlcommands = content.split(';')
-            cursor = self.cnx.cursor()
             for tables in sqlcommands:
-                cursor.execute(tables)
+                self.db.cursordb(tables)
             print("Table created")
 
     def datacategory(self, table_name, data_list):
@@ -28,11 +27,11 @@ class DBsetup(DB):
             data_category = {
                                 'name': name,
                             },
-            self.cursor.executemany(add_category,
-                                    data_category)
-            self.cnx.commit()
-            print(self.cursor.rowcount, "Record inserted successfully "
-                                        "into Laptop table")
+            self.db.cursor.executemany(add_category,
+                                       data_category)
+            self.db.commit()
+            print("Record inserted successfully "
+                  "into Laptop table")
 
     def getapidata(self):
         """Used to get products data from the OpenFoodFact API"""
@@ -75,8 +74,8 @@ class DBsetup(DB):
                        %(category_id)s)""")
 
         selectcatid = """SELECT * from Category"""
-        self.cursor.execute(selectcatid)
-        datatables = self.cursor.fetchall()
+        self.db.cursordb(selectcatid)
+        datatables = self.db.fetchall()
         for d in datatables:
             for prod in self.products[d[1]]:
                 try:
@@ -88,8 +87,8 @@ class DBsetup(DB):
                         'nutriscore': prod['nutrition_grades'],
                         'category_id': d[0],
                     }
-                    self.cursor.execute(add_product, data_product)
-                    self.cnx.commit()
+                    self.db.cursordb(add_product, data=data_product)
+                    self.db.commit()
                 except KeyError:
                     pass
 
@@ -97,8 +96,8 @@ class DBsetup(DB):
         """Used to update the API products"""
         sql_select_query = f"SELECT barcode from " \
                            f"Product WHERE barcode = Product.barcode"
-        self.cursor.execute(sql_select_query)
-        res = self.cursor.fetchall()
+        self.db.cursordb(sql_select_query)
+        res = self.db.fetchall()
         if res:
             self.updatedata()
         else:
@@ -117,7 +116,7 @@ class DBsetup(DB):
                     val = (prod['generic_name_fr'], prod['code'],
                            prod['nutrition_grades'], prod['url'],
                            prod['stores'], prod['code'])
-                    self.cursor.execute(sql_update_query, val)
-                    self.cnx.commit()
+                    self.db.cursordb(sql_update_query, data=val)
+                    self.db.commit()
                 except KeyError:
                     pass

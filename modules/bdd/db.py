@@ -67,8 +67,8 @@ class DB:
             'product_id': product_id,
             'user_id': user_id,
         }
-        self.cursor.execute(add_product, data_product)
-        self.cnx.commit()
+        self.cursordb(add_product, data=data_product)
+        self.commit()
 
     def insertuser(self, user_name):
         """Used to insert user in DB"""
@@ -84,7 +84,6 @@ class DB:
             print(f"Le nom d'utilisateur {user_name} a été crée")
         except mysql.connector.errors.IntegrityError:
             print("Ce nom d'utilisateur existe déjà")
-            exit()
 
     def checkuser(self, user_name):
         """Used to check if username already exists in DB"""
@@ -96,3 +95,15 @@ class DB:
         else:
             print("Le nom d'utilisateur est invalide")
             exit()
+
+    def cursordb(self, requestsql, data=None):
+        if data:
+            self.cursor.execute(requestsql, data)
+        else:
+            self.cursor.execute(requestsql)
+
+    def fetchall(self):
+        return self.cursor.fetchall()
+
+    def commit(self):
+        return self.cnx.commit()

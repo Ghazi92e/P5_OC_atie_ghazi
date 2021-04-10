@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
 """Add products categories"""
 Categories = [
     'Chocolate',
@@ -5,8 +8,8 @@ Categories = [
     'Drink',
     'Cheese',
 ]
-"""Config DB connection"""
-DB_USER = "ghazi"
-DB_NAME = "Openfoodfact_db"
-DB_PASSWORD = "Liban"
-DB_HOST = "localhost"
+"""Use environment variables to the DB connection"""
+DB_USER = os.environ.get("DB_USER")
+DB_NAME = os.environ.get("DB_NAME")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB_HOST = os.environ.get("DB_HOST")
