@@ -5,13 +5,13 @@
 
 The startup Pur Beurre works well knows French eating habits. Their restaurant, Ratatouille, is enjoying growing success and attracting more and more visitors to the Butte de Montmartre.
 
-The team noticed that their users were keen on making a change in their diet but weren't sure where to start. Replace Nutella with a hazelnut paste, yes, but which one? And in which store to buy it? Their idea is therefore to create a program that would interact with the Open Food Facts database to retrieve the foods, compare them and offer the user a healthier substitute for the food they want.
+The team noticed that their users were keen on making a change in their diet but weren't sure where to start. Replace Nutella with a hazelnut paste, yes, but which one ? And in which store to buy it ? Their idea is therefore to create a program that would interact with the Open Food Facts database to retrieve the foods, compare them and offer the user a healthier substitute for the food they want.
 
 ### Specifications
 #### Description of the user journey
 The user is on the terminal. The latter displays the following choices:
 
-1. What food do you want to replace?
+1. What food do you want to replace ?
 2. Find my substitute foods.
 
 The user selects 1. The program asks the following questions to the user and the user selects the answers:
