@@ -44,7 +44,7 @@ Class | Method | Description
  DB | selectiduser              | select a user
  DB | insertsubproduct          | insert into DB a substitute product 
  DB | insertuser                | create a user
- DB | checkuser                 | check if a user already exist
+ DB | checkuserdb               | check if a user already exist in database
  DB | cursordb                  | create a cursor 
  DB | fetchall                  | display data DB
  DB | commit                    | create a commit
@@ -59,4 +59,5 @@ Class | Method | Description
  DBshow  | showproductrequest   | display DB products 
  Menu    | home_menu1           | manage the first part of the menu
  Menu    | home_menu2           | manage the second part of the menu
+ Menu    | check_userapp        | check if the user has an account
  Initapp | mainapp              | manage the main application

@@ -17,10 +17,12 @@ class DB:
                                            password=DB_PASSWORD,
                                            host=DB_HOST)
         self.cursor = self.cnx.cursor()
+        print("__enter__")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Close the connexion to the DB"""
+        print("__exit__")
         self.cursor.close()
 
     def selectrequest(self, select_table_name, where_field, where_data_field,
@@ -50,9 +52,9 @@ class DB:
     def selectiduser(self, name):
         """Select the user id"""
         sql_select_query = f"SELECT id FROM User WHERE name = '{name}'"
-        self.cursor.execute(sql_select_query)
+        self.cursordb(sql_select_query)
         res = self.cursor.fetchone()
-        self.cnx.commit()
+        self.commit()
         return res[0]
 
     def insertsubproduct(self, subproduct_id, product_id, user_id):
@@ -79,17 +81,17 @@ class DB:
             user_data = {
                 'name': user_name,
             }
-            self.cursor.execute(add_user, user_data)
-            self.cnx.commit()
+            self.cursordb(add_user, data=user_data)
+            self.commit()
             print(f"Le nom d'utilisateur {user_name} a été crée")
         except mysql.connector.errors.IntegrityError:
             print("Ce nom d'utilisateur existe déjà")
 
-    def checkuser(self, user_name):
+    def checkuserdb(self, user_name):
         """Used to check if username already exists in DB"""
         sql_select_query = f"SELECT name from User WHERE name = '{user_name}'"
-        self.cursor.execute(sql_select_query)
-        res = self.cursor.fetchall()
+        self.cursordb(sql_select_query)
+        res = self.fetchall()
         if res:
             print("Le nom d'utilisateur est valide")
         else:
@@ -97,13 +99,16 @@ class DB:
             exit()
 
     def cursordb(self, requestsql, data=None):
+        """open a database cursor"""
         if data:
             self.cursor.execute(requestsql, data)
         else:
             self.cursor.execute(requestsql)
 
     def fetchall(self):
+        """display a database request"""
         return self.cursor.fetchall()
 
     def commit(self):
+        """execute a database request"""
         return self.cnx.commit()

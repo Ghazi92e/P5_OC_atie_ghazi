@@ -3,6 +3,11 @@ from modules.bdd.dbshow import DBshow
 
 
 class Menu:
+    def check_userapp(self, user_app):
+        """Check if the application user exist"""
+        with DB() as db:
+            db.checkuserdb(user_app)
+
     def home_menu1(self, user):
         with DB() as db:
             """Used to manage the first part of the menu"""
