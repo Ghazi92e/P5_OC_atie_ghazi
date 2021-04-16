@@ -9,7 +9,6 @@ class DBshow:
         res = self.db.fetchall()
         for data in res:
             print(data)
-        self.db.commit()
 
     def showproductrequest(self, requestsql):
         """Used to show products data table"""
@@ -22,4 +21,3 @@ class DBshow:
                   "Nutriscore:", data[3], "|",
                   "Url:", data[4], "|",
                   "Stores:", data[5])
-        self.db.commit()

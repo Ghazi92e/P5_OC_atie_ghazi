@@ -7,10 +7,10 @@ from modules.application.home_menu import Menu
 class Initapp:
     def mainapp(self):
         """Manage main application"""
-        createaccount = input("Pour créer un compte entrer 1 "
-                              "Pour accéder à l'application entrer 2 "
-                              "Pour installer la BDD entrer 3 "
-                              "Pour mettre à jour les produits entrer 4")
+        createaccount = input("Pour créer un compte entrer 1\n"
+                              "Pour accéder à l'application entrer 2\n"
+                              "Pour installer la BDD entrer 3\n"
+                              "Pour mettre à jour les produits entrer 4\n")
         if createaccount == '1':
             with DB() as db:
                 user = input("Veuillez entrer un nom d'utilisateur")

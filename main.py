@@ -6,5 +6,6 @@
 from modules.application.initapp import Initapp
 
 """Instantiate the main class"""
-app = Initapp()
-app.mainapp()
+if __name__ == "__main__":
+    app = Initapp()
+    app.mainapp()
