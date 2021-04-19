@@ -17,12 +17,10 @@ class DB:
                                            password=DB_PASSWORD,
                                            host=DB_HOST)
         self.cursor = self.cnx.cursor()
-        print("__enter__")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Close the connexion to the DB"""
-        print("__exit__")
         self.cursor.close()
 
     def selectrequest(self, select_table_name, where_field, where_data_field,
