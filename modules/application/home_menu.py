@@ -25,11 +25,12 @@ class Menu:
             db_show.showproductrequest(db.selectrequest
                                        ("Product", "id",
                                         selectproduct, "where"))
-            print("PRODUITS DE SUBSTITUS:")
+            print("PRODUIT DE SUBSTITUTION:")
             db_show.showproductrequest(db.selectrequest
                                        ("Product", "category_id",
                                         cat, "order"))
-            insertsub = input("Selectionner un substitut")
+            insertsub = input("Entrer le numéro du produit de substitution"
+                              " pour sauvegarder\n")
             db.insertsubproduct(insertsub, selectproduct,
                                 db.selectiduser(user))
             print("Vos informations ont bien été sauvegardées")

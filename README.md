@@ -20,19 +20,38 @@ The user selects 1. The program asks the following questions to the user and the
 - Select the food. [Several propositions associated with a number. The user enters the number corresponding to the chosen food and presses enter]
 - The program offers a substitute, its description, where to store or buy it (if applicable) and a link to the Open Food Facts page for that food.
 - The user then has the possibility of saving the result in the database.
+### Technologies
+* [Python](https://www.python.org/downloads/): Version 3.8
+* [MySQL](https://www.mysql.com/fr/downloads/): Version 8
 
 ### Installation
 1. Install MYSQL
 2. Create a database with MYSQL
-3. Create a .env file
+3. Clone the repository
+```
+git clone https://github.com/Ghazi92e/P5_OC_atie_ghazi.git
+```
+4. Create a virtual env
+```
+python -m venv env
+```
+5. Activate the virtual env
+```
+source env/bin/activate
+```
+6. Install packages from requirements.txt
+```
+pip install -r requirements.txt
+```
+7. Create a .env file
 ```
 touch .env
 ```
-4. Add and configure the environment variables in file .env
+8. Add and configure the environment variables in file .env
 ```
 DB_USER="", DB_NAME="", DB_PASSWORD="", DB_HOST=""
 ```
-5. Run the application with the main.py file
+9. Run the application with the main.py file
 ```
 python main.py
 ```

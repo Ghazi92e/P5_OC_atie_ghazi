@@ -28,7 +28,7 @@ class DB:
         """Select product from DB"""
         sql_select_query = f"SELECT * from {select_table_name} "
         sql_where_query = f"WHERE {where_field} = {where_data_field} "
-        sql_order_query = f"ORDER BY nutriscore"
+        sql_order_query = f"AND nutriscore != 'e' ORDER BY RAND() LIMIT 1"
         if name_field == "select":
             return sql_select_query
         elif name_field == "where":
